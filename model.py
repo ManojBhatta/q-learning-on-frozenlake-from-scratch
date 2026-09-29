@@ -136,8 +136,24 @@ def extract_greedy_policy(q_table):
     policy = max_q
     return policy
 
-# Step 15 - run_greedy_episode (not yet solved)
-# TODO: implement
+# Step 15 - run_greedy_episode
+def run_greedy_episode(env, policy, seed=None, max_steps=200):
+    """Run one greedy episode and return True if the goal was reached."""
+    obs, _ = env.reset(seed=seed)
+    step = 0
+    while True:
+        action = policy[obs]
+        ns, r, terminated, truncated, _ = env.step(action)
+        step += 1
+        obs = ns
+
+        if r == 1.0:
+            return True
+            
+        if truncated or step >= max_steps:
+            break
+
+    return False
 
 # Step 16 - evaluate_success_rate (not yet solved)
 # TODO: implement
