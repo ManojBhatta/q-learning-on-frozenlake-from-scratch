@@ -53,11 +53,10 @@ def epsilon_greedy_action(q_table, state, epsilon, action_space, rng):
     # TODO: with prob epsilon explore via action_space, else pick a max-Q action (random among ties)
     if should_explore(epsilon, rng):
         return sample_random_action(action_space)
-    else:
-        q_vals = q_table[state]
-        max_q = q_vals.max()
-        max_idx = np.where(q_vals == max_q)[0]
-        return int(rng.choice(list(max_idx)))
+
+    q_vals = q_table[state]
+    max_idx = np.flatnonzero(q_vals == q_vals.max())
+    return int(rng.choice(max_idx))
 
 # Step 7 - decay_epsilon (not yet solved)
 # TODO: implement
